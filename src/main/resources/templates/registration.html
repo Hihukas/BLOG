@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/fragments :: head(#{lt.codeacademy.blog.registration.page.title})"></head>
+<body>
+
+<header th:replace="fragments/fragments :: header"></header>
+
+<div class="container-positioning">
+
+    <form style="width: 500px" method="POST" th:object="${user}" th:action="@{/public/registration/save}">
+
+        <div class="fs-1 fw-bolder d-flex justify-content-center"
+             th:text="#{lt.codeacademy.blog.registration.page.registration}"></div>
+
+        <div th:replace="fragments/fragments :: inputWithErrorHandlerIncludingGlobal('floatingInputName', 'username', ${user.username ne null}, #{lt.codeacademy.blog.registration.page.username}, 'text', false)"></div>
+
+        <div th:replace="fragments/fragments :: inputWithErrorHandlerIncludingGlobal('floatingInputPassword', 'password', ${user.password ne null}, #{lt.codeacademy.blog.registration.page.password}, 'password', true)"></div>
+
+        <div th:replace="fragments/fragments :: inputWithErrorHandlerIncludingGlobal('floatingInputRepeatPassword', 'repeatPassword', ${user.repeatPassword ne null}, #{lt.codeacademy.blog.registration.page.repeatPassword}, 'password', true)"></div>
+
+        <div class="alert alert-success d-flex justify-content-center" role="alert" th:if="${message}"
+             th:text="#{${message}}"></div>
+
+        <div class="d-flex justify-content-end">
+            <button type="submit" class="btn btn-light text-dark"
+                    th:text="#{lt.codeacademy.blog.registration.page.registration}"></button>
+        </div>
+
+    </form>
+
+</div>
+
+<footer th:replace="fragments/fragments :: footer"></footer>
+
+</body>
+</html>

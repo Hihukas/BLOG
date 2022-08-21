@@ -1,0 +1,27 @@
+html {
+    height: 100%;
+}
+
+body {
+    margin: 0;
+    height: 100%;
+}
+
+.container-positioning {
+    min-height: calc(100% - 168px);
+    margin-top: 42px;
+    margin-bottom: 42px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+footer {
+    margin-top: auto;
+    height: 42px;
+    width: 100%;
+    bottom: 0;
+    border-top-color: rgb(222, 226, 230);
+    border-top-style: solid;
+    border-top-width: 1px;
+}

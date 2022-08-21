@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="fragments/fragments :: head(#{lt.codeacademy.blog.main.page.title})"></head>
+<body>
+
+<header th:replace="fragments/fragments :: header"></header>
+
+<div class="container-positioning">
+    <div class="container" th:if="${posts.hasContent()}">
+
+        <div class="row row-cols-1 row-cols-md-3 g-4">
+            <div class="col" th:each="post : ${posts.content}">
+                <a type="button" class="btn btn-light"
+                   th:href="@{/public/blog/{id}(id=${post.id})}">
+                    <div class="card h-100">
+                        <img th:src="${post.photo}"
+                             class="card-img-top">
+                        <div class="card-body">
+                            <h5 class="card-title" th:text="${post.title}"></h5>
+                            <p class="card-text"><small class="text-muted" th:text="${post.postDateAndTime}"></small>
+                            </p>
+                        </div>
+                    </div>
+                </a>
+                <div sec:authorize="hasRole('ADMIN')"
+                     th:replace="fragments/fragments :: icon('d-flex justify-content-end', 'text-danger', @{/blog/{id}/delete(id=${post.id})}, 'bi bi-trash3')"></div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="alert alert-danger d-flex justify-content-center" role="alert" th:if="${not posts.hasContent()}"
+         th:text="#{lt.codeacadmy.blog.page.alert}"></div>
+
+</div>
+
+<footer th:replace="fragments/fragments :: footer"></footer>
+
+</body>
+</html>

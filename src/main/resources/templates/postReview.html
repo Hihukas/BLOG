@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="fragments/fragments :: head(#{lt.codeacademy.blog.post.review.page.title})"></head>
+<body>
+
+<header th:replace="fragments/fragments :: header"></header>
+
+<div class="container-positioning">
+    <div class="container">
+
+        <div class="row row-cols-1 row-cols-md-1 g-4">
+            <div class="col" th:if="${post ne null}">
+                <div class="card mb-3 h-100">
+                    <img th:src="${post.photo}"
+                         class="card-img-top">
+                    <div class="card-body">
+                        <h5 class="card-title" th:text="${post.title}"></h5>
+                        <p class="card-text" th:text="${post.description}"></p>
+                        <div class="d-flex">
+
+                            <div th:replace="fragments/fragments :: smallText('p-2 flex-grow-1', 'text-muted', ${post.postDateAndTime})"></div>
+
+                            <div sec:authorize="hasRole('ADMIN')"
+                                 th:replace="fragments/fragments :: icon('p-2', 'text-success', @{/blog/{id}/update(id=${post.id})}, 'bi bi-arrow-clockwise')"></div>
+
+                            <div sec:authorize="hasRole('ADMIN')"
+                                 th:replace="fragments/fragments :: icon('p-2', 'text-danger', @{/blog/{id}/delete(id=${post.id})}, 'bi bi-trash3')"></div>
+
+                        </div>
+                        <div class="card">
+                            <div style="padding: 0" class="card-body d-flex">
+
+                                <div th:replace="fragments/fragments :: smallText('p-2 flex-grow-1', 'text-muted', #{lt.codeacademy.blog.post.review.page.comments})"></div>
+
+                                <div sec:authorize="isAuthenticated()"
+                                     th:replace="fragments/fragments :: icon('p-2', 'text-success', @{/comment/save}, 'bbi bi-plus')"></div>
+
+                            </div>
+                            <ul class="list-group list-group-flush"
+                                th:if="${comments.hasContent() && comment.post.id eq post.id}"
+                                th:each="comment: ${comments.content}">
+                                <div class="d-flex">
+                                    <div class="p-2 flex-grow-1">
+                                        <div th:replace="fragments/fragments :: smallText('', 'text-muted', ${comment.user.username})"></div>
+                                        <div th:replace="fragments/fragments :: smallText('', 'text-dark', ${comment.comment})"></div>
+                                        <div th:replace="fragments/fragments :: smallText('', 'text-muted', ${comment.commentDateAndTime})"></div>
+                                    </div>
+
+                                    <div class="p-2" sec:authorize="isAuthenticated()"
+                                         th:if="${#authentication.principal.id eq comment.user.id}">
+                                        <div th:replace="fragments/fragments :: icon('', 'text-success', @{/comment/{id}/update(id=${comment.id})}, 'bi bi-arrow-clockwise')"></div>
+                                    </div>
+
+                                    <div class="p-2" sec:authorize="isAuthenticated()"
+                                         th:if="${#authorization.getAuthentication().name eq 'admin' || #authentication.principal.id eq comment.user.id}">
+                                        <div th:replace="fragments/fragments :: icon('', 'text-danger', @{/comment/{id}/delete(id=${comment.id})}, 'bi bi-trash3')"></div>
+                                    </div>
+
+
+                                </div>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<footer th:replace="fragments/fragments :: footer"></footer>
+
+</body>
+</html>

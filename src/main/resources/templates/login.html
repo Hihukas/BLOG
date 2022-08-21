@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/fragments :: head(#{lt.codeacademy.blog.login.page.title})"></head>
+<body>
+
+<header th:replace="fragments/fragments :: header"></header>
+
+<div class="container-positioning">
+
+    <form style="width: 500px" method="POST" th:action="@{/login}">
+
+        <div class="fs-1 fw-bolder d-flex justify-content-center"
+             th:text="#{lt.codeacademy.blog.login.page.sign.in}"></div>
+
+        <div class="form-floating mb-3">
+            <input type="text" class="form-control" id="floatingInputName" name="username"
+                   th:placeholder="#{lt.codeacademy.blog.login.page.username}">
+            <label for="floatingInputName" th:text="#{lt.codeacademy.blog.login.page.username}"></label>
+        </div>
+        <div class="form-floating mb-3">
+            <input type="password" class="form-control" id="floatingInputPassword" name="password"
+                   th:placeholder="#{lt.codeacademy.blog.login.page.password}">
+            <label for="floatingInputPassword" th:text="#{lt.codeacademy.blog.login.page.password}"></label>
+        </div>
+
+        <div class="alert alert-danger d-flex justify-content-center" role="alert" th:if="${param.error ne null}"
+             th:text="#{lt.codeacademy.blog.login.page.login.failed}"></div>
+
+        <div class="d-flex justify-content-end">
+            <button type="submit" class="btn btn-light text-dark"
+                    th:text="#{lt.codeacademy.blog.login.page.sign.in}"></button>
+        </div>
+
+        <div style="margin-top: 16px" class="card">
+            <div class="card-body">
+                <div class="d-flex justify-content-end">
+                    <p style="margin-bottom: 0; margin-right: 10px"
+                       th:text="#{lt.codeacademy.blog.login.page.registration}"></p>
+                    <a th:href="@{/public/registration/save}" class="text-dark"
+                       th:text="#{lt.codeacademy.blog.login.page.create.account}"></a>
+                </div>
+            </div>
+        </div>
+
+    </form>
+
+</div>
+
+<footer th:replace="fragments/fragments :: footer"></footer>
+
+</body>
+</html>

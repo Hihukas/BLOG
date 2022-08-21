@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      th:with="commentExist=${comment.id ne null}">
+<head th:replace="fragments/fragments :: head(#{lt.codeacademy.blog.comment.page.title})"></head>
+<body>
+
+<header th:replace="fragments/fragments :: header"></header>
+
+<div class="container-positioning">
+
+    <form method="POST" th:object="${comment}">
+
+        <div class="fs-1 fw-bolder d-flex justify-content-center"
+             th:if="${commentExist}" th:text="#{lt.codeacademy.blog.comment.page.comment.update}"></div>
+        <div class="fs-1 fw-bolder d-flex justify-content-center"
+             th:if="${not commentExist}" th:text="#{lt.codeacademy.blog.comment.page.comment.create}"></div>
+
+        <div th:replace="fragments/fragments :: textAreaWithErrorHandler('floatingTextareaComment', 'comment', ${comment.comment ne null}, #{lt.codeacademy.blog.comment.page.comment.insert}, 'margin-top: 16px; margin-bottom: 16px', 'height: 500px; width: 500px')"></div>
+
+        <div class="d-flex justify-content-end">
+            <button type="submit" class="btn btn-light text-dark"
+                    th:if="${commentExist}" th:text="#{lt.codeacademy.blog.comment.page.comment.update}"></button>
+            <button type="submit" class="btn btn-light text-dark"
+                    th:if="${not commentExist}" th:text="#{lt.codeacademy.blog.comment.page.comment.create}"></button>
+        </div>
+
+    </form>
+
+</div>
+
+<footer th:replace="fragments/fragments :: footer"></footer>
+
+</body>
+</html>
